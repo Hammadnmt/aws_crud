@@ -1,19 +1,23 @@
 const { Book } = require("../models/Book");
+const BookServices = require("../services/bookServices");
 
 exports.deleteBook = async (event) => {
-  const { id: BookId } = event.pathParameters;
-    try {
-      data = await Book.destroy({
-        where: {
-          id: BookId,
-        },
-      });
-      // console.log(data);
-    } catch (error) {
-      console.log(error);
+  try {
+    const data = await BookServices.deleteBook(event.pathParameters.id);
+    if (data === 0) {
+      return {
+        statusCode: 404,
+        message: "Book not found",
+      };
     }
-  return {
-    statusCode: 200,
-    message: "Book deleted",
-  };
+    return {
+      statusCode: 200,
+      message: "Book deleted",
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      message: "something went wrong",
+    };
+  }
 };

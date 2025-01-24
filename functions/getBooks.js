@@ -1,15 +1,22 @@
 const { Book } = require("../models/Book");
 
 exports.getBooks = async (event) => {
-  let data = {};
   try {
-    data = await Book.findAll();
-    // console.log(data);
+    const data = await Book.findAll();
+    if (data.length === 0) {
+      return {
+        statusCode: 204,
+        message: "No books found",
+      };
+    }
+    return {
+      statusCode: 200,
+      body: data ? JSON.stringify(data) : [],
+    };
   } catch (error) {
-    console.log(error);
+    return {
+      statusCode: 500,
+      message: "something went wrong",
+    };
   }
-  return {
-    statusCode: 200,
-    body: data ? JSON.stringify(data) : [],
-  };
 };
