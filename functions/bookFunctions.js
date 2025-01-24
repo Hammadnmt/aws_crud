@@ -3,10 +3,11 @@ const { BookServices } = require("../services/bookServices");
 exports.createBook = async (event) => {
   try {
     const data = await BookServices.createBook(JSON.parse(event.body));
+    // console.log(data);
     if (!data) {
       return {
         statusCode: 400,
-        header: { "Content-Type": "application/json" },
+        Headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ error: "Failed to create book" }),
       };
     }
@@ -26,13 +27,13 @@ exports.getAllBooks = async (event) => {
     if (data.length == 0) {
       return {
         statusCode: 404,
-        header: { "Content-Type": "application/json" },
+        // Headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: "No Books Found" }),
       };
     }
     return {
       statusCode: 200,
-      header: { "Content-Type": "application/json" },
+      // header: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
   } catch (error) {

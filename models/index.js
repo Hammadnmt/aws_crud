@@ -1,28 +1,29 @@
 const { sequelize } = require("../config/dbconnection");
+const { DataTypes } = require("sequelize");
 
-exports.Book = sequelize.define("Book", {
-  title: {
+const Book = sequelize.define("Book", {
+  Title: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  genre: {
+  Genre: {
     type: DataTypes.STRING,
   },
 });
 
 // Author model
-exports.Author = sequelize.define("Author", {
-  name: {
+const Author = sequelize.define("Author", {
+  Name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  biography: {
+  Biography: {
     type: DataTypes.TEXT,
   },
 });
 
 // Junction table (BookAuthor)
-exports.BookAuthor = sequelize.define("BookAuthor", {
+const BookAuthor = sequelize.define("BookAuthor", {
   role: {
     type: DataTypes.STRING, // e.g., 'Primary Author', 'Co-Author'
   },
@@ -32,13 +33,8 @@ exports.BookAuthor = sequelize.define("BookAuthor", {
 Book.belongsToMany(Author, { through: BookAuthor });
 Author.belongsToMany(Book, { through: BookAuthor });
 
-(async () => {
-  try {
-    await sequelize.sync({ force: true }); // Use `force: true` to reset tables during development
-    console.log("Database synced successfully!");
-  } catch (error) {
-    console.error("Error syncing the database:", error);
-  } finally {
-    await sequelize.close();
-  }
-})();
+module.exports = {
+  Book,
+  Author,
+  BookAuthor,
+};

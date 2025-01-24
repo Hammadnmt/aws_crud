@@ -1,4 +1,4 @@
-const { Book } = require("../models/index");
+const { Author, Book } = require("../models/index");
 
 exports.BookServices = {
   getAllBooks: async () => {
@@ -32,12 +32,12 @@ exports.BookServices = {
       Biography: data.Biography,
     };
     try {
-      const book = await Book.create(bookData);
+      const book = await Book.create(bookdata);
       const author = await Author.create(authordata);
       await book.addAuthor(author);
+      console.log(book);
       return book;
     } catch (error) {
-      console.error("Error creating book:", error);
       throw error;
     }
   },
@@ -50,7 +50,6 @@ exports.BookServices = {
       await book.update(updatedBookData);
       return book;
     } catch (error) {
-      console.error("Error updating book:", error);
       throw error;
     }
   },
@@ -63,7 +62,6 @@ exports.BookServices = {
       await book.destroy();
       return book;
     } catch (error) {
-      console.error("Error deleting book:", error);
       throw error;
     }
   },
@@ -74,7 +72,6 @@ exports.BookServices = {
       });
       return books;
     } catch (error) {
-      console.error("Error fetching books by author:", error);
       throw error;
     }
   },

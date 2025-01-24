@@ -15,7 +15,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: .
-      Handler: ./functions/getBooks.getBooks
+      Handler: ./functions/bookFunctions.getAllBooks
       Runtime: nodejs20.x
       Architectures:
         - x86_64
@@ -23,13 +23,13 @@ Resources:
         getBooks:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /book
+            Path: /
             Method: get
   createBook:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: .
-      Handler: ./functions/createBook.createBook
+      Handler: ./functions/bookFunctions.createBook
       Runtime: nodejs20.x
       Architectures:
         - x86_64
@@ -37,41 +37,41 @@ Resources:
         createBook:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /book
+            Path: /
             Method: post
-  deleteBook:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: .
-      Handler: ./functions/deleteBook.deleteBook
-      Runtime: nodejs20.x
-      Architectures:
-        - x86_64
-      Events:
-        deleteBook:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /{id}
-            Method: delete
-  updateBook:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: .
-      Handler: ./functions/updateBook.updateBook
-      Runtime: nodejs20.x
-      Architectures:
-        - x86_64
-      Events:
-        updateBook:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /{id}
-            Method: put
+  # deleteBook:
+  #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  #   Properties:
+  #     CodeUri: .
+  #     Handler: ./functions/deleteBook.deleteBook
+  #     Runtime: nodejs20.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       deleteBook:
+  #         Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+  #         Properties:
+  #           Path: /{id}
+  #           Method: delete
+  # updateBook:
+  #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  #   Properties:
+  #     CodeUri: .
+  #     Handler: ./functions/updateBook.updateBook
+  #     Runtime: nodejs20.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       updateBook:
+  #         Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+  #         Properties:
+  #           Path: /{id}
+  #           Method: put
   getBooksByAuthor:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: .
-      Handler: ./functions/getBooksByAuthor.getBooksByAuthor
+      Handler: ./functions/bookFunctions.getBooksByAuthorId
       Runtime: nodejs20.x
       Architectures:
         - x86_64
@@ -79,22 +79,22 @@ Resources:
         getBooksByAuthor:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /book/{authorId}
+            Path: /{authorId}
             Method: get
-  getAuthorsByBook:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: .
-      Handler: ./functions/getAuthorsByBook.getAuthorsByBook
-      Runtime: nodejs20.x
-      Architectures:
-        - x86_64
-      Events:
-        getAuthorsByBook:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /author/{bookId}
-            Method: get
+  # getAuthorsByBook:
+  #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  #   Properties:
+  #     CodeUri: .
+  #     Handler: ./functions/getAuthorsByBook.getAuthorsByBook
+  #     Runtime: nodejs20.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       getAuthorsByBook:
+  #         Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+  #         Properties:
+  #           Path: /author/{bookId}
+  #           Method: get
 # Outputs:
 #   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
 #   # Find out more about other implicit resources you can reference within SAM
