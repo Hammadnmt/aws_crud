@@ -5,10 +5,10 @@ const BookServices = {
     return await Book.findAll();
   },
   async getBookById(id) {
-    return await Book.findByPk(id);
+    const data = await Book.findByPk(id);
   },
   async createBook(data) {
-    const bookData = { Title: data.Title, Author: data.Author };
+    const bookData = { id: data.id, Title: data.Title, Author: data.Author };
     return await Book.create(bookData);
   },
   async updateBook(bookData, id) {

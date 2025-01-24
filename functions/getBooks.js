@@ -1,22 +1,27 @@
-const { Book } = require("../models/Book");
+const BookServices = require("../services/bookServices");
 
 exports.getBooks = async (event) => {
   try {
-    const data = await Book.findAll();
+    console.log("Getting all books");
+    const data = await BookServices.getAllBooks();
     if (data.length === 0) {
       return {
-        statusCode: 204,
-        message: "No books found",
+        statusCode: 200,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: "No books found" }),
       };
     }
     return {
       statusCode: 200,
-      body: data ? JSON.stringify(data) : [],
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     };
   } catch (error) {
+    console.error(error);
     return {
       statusCode: 500,
-      message: "something went wrong",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: "something went wrong" }),
     };
   }
 };

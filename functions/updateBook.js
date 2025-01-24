@@ -1,22 +1,13 @@
-const { Book } = require("../models/Book");
+const BookServices = require("../services/bookServices");
 
 exports.updateBook = async (event) => {
-  const { id: BookId } = event.pathParameters;
-  const { body } = event;
   try {
-    const parsedBody = JSON.parse(body);
-    const updateddata = await Book.update(
-      {
-        Author: parsedBody.Author,
-        Title: parsedBody.Title,
-      },
-      {
-        where: {
-          id: BookId,
-        },
-      }
+    const updatebook = await BookServices.updateBook(
+      JSON.parse(event.body),
+      event.pathParameters.id
     );
-    if (updateddata[0] === 0) {
+
+    if (updatebook[0] === 0) {
       return {
         statusCode: 404,
         message: "Book not found",
@@ -27,6 +18,7 @@ exports.updateBook = async (event) => {
       message: "Book updated",
     };
   } catch (error) {
+    console.error(error);
     return {
       statusCode: 500,
       message: "something went wrong",

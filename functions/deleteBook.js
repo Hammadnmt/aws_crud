@@ -1,4 +1,3 @@
-const { Book } = require("../models/Book");
 const BookServices = require("../services/bookServices");
 
 exports.deleteBook = async (event) => {
@@ -15,6 +14,7 @@ exports.deleteBook = async (event) => {
       message: "Book deleted",
     };
   } catch (error) {
+    console.log(error);
     return {
       statusCode: 500,
       message: "something went wrong",

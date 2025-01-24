@@ -1,25 +1,45 @@
-const { Book } = require("../models/Book");
 const BookServices = require("../services/bookServices");
 
 exports.createBook = async (event) => {
   try {
-    const data = await BookServices.createBook(JSON.parse(event.body));
+    const requestBody = JSON.parse(event.body);
+
+    if (!requestBody.Title || !requestBody.Author) {
+      return {
+        statusCode: 400,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: "Missing required fields: title or author",
+        }),
+      };
+    }
+
+    const data = await BookServices.createBook(requestBody);
+    console.log("Created book:", data.dataValues);
+
     if (!data) {
       return {
         statusCode: 400,
-        message: "Failed to create book",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: "Failed to create book due to invalid input or server error",
+        }),
       };
     }
+
     return {
       statusCode: 201,
-      body: data ? data : [],
-      message: "Created Successfully",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data.dataValues),
     };
   } catch (error) {
-    console.error(error);
+    console.error("Error creating book:", error);
     return {
       statusCode: 500,
-      message: "something went wrong",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: "Internal Server Error: Unable to create book",
+      }),
     };
   }
 };

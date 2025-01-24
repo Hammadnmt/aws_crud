@@ -1,0 +1,21 @@
+{
+  "httpMethod": "GET",
+  "path": "/books",
+  "queryStringParameters": {
+    "author": "John Doe"
+  },
+  "headers": {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer example-token"
+  },
+  "pathParameters": null,
+  "body": null,
+  "requestContext": {
+    "requestId": "12345-abcde",
+    "identity": {
+      "sourceIp": "192.168.1.1",
+      "userAgent": "PostmanRuntime/7.29.2"
+    }
+  },
+  "isBase64Encoded": false
+}
